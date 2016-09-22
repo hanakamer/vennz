@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html ng-app="vennApp">
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./js/ng-tags-input/ng-tags-input.min.css">
+    <link rel="stylesheet" href="./js/ng-tags-input/ng-tags-input.bootstrap.min.css">
+    <link rel="stylesheet" href="/style/main.css" >
+    <title></title>
+  </head>
+  <body ng-controller="MainCtrl" >
+    <div >
+       <fieldset  data-ng-repeat="choice in choices track by $index">
+          <input type="text" ng-model="choice.title" name="" placeholder="title of yout venn" />
+          <br>
+          <tags-input ng-model="choice.items" min-length="1" allowed-tags-pattern="^[A-Za-z/#]+$" on-tag-added="addToAutoComplete($tag)">
+            <auto-complete source="loadTags($query)"></auto-complete>
+          </tags-input>
+          <button class="remove" ng-click="removeChoice(choice)">-</button>
+       </fieldset>
+       <button class="addfields" ng-click="addNewChoice()">Add fields</button>
+
+       <div id="choicesDisplay">
+          <!-- {{ choices }} -->
+
+
+       </div>
+    </div>
+    <!-- <form>
+      <div id="inputs" >
+        <p>
+          <label for="listName">Name of List</label>
+          <input type="text" name="listName" id="listName" value="" />
+        </p>
+        <p>
+          <label for="listItems">List Items</label>
+          <input type="textarea" name="listItems" value=""/>
+        </p>
+
+      </div>
+    </form> -->
+
+    <br>
+    {{yourData}}
+    <br>
+    <venn-area chart-data="myData" >
+        <svg id="venn"> </svg>
+    </venn-area>
+    <br>
+    {{myData}}
+    <br>
+    <script type="text/javascript" src="./js/angular.min.js"></script>
+    <script type="text/javascript" src="./js/d3.js"></script>
+    <script type="text/javascript" src="./js/venn.js"></script>
+    <script type="text/javascript"  src="./js/ng-tags-input/ng-tags-input.js"></script>
+    <script type="text/javascript" src="./js/angular-d3.js"></script>
+    <script type="text/javascript" src="./app/app.js"></script>
+    <script type="text/javascript" src="./app/mainController.js"></script>
+    <script type="text/javascript" src="./app/vennDirective.js"></script>
+    <!-- <script src="https://code.angularjs.org/1.2.28/angular-resource.min.js"></script> -->
+
+    <!-- <script type="text/javascript" src="./js/d3.js"></script>
+    <script type="text/javascript" src="./js/d3-venn.js"></script>
+    <script type="text/javascript" src="./js/venn.js"></script>
+    <script type="text/javascript" src="script.js"></script> -->
+
+  </body>
+</html>

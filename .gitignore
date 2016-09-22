@@ -1,0 +1,5 @@
+.DS_Store
+build/
+copySource.sh
+node_modules
+npm-debug.log
