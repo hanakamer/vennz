@@ -99,16 +99,13 @@ $scope.addNewChoice = function() {
   $scope.createSets();
   var newItemNo = $scope.choices.length+1;
   $scope.choices.push({'id':newItemNo});
-
 };
-
 $scope.removeChoice = function(choice) {
   var index=$scope.choices.indexOf(choice);
   $scope.choices.splice(index,1);
+  $scope.createSets();
 };
 $scope.loadTags = function(query) {
   return tags;
 };
-
-console.log($scope.choices.length);
 });

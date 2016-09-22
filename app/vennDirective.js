@@ -8,7 +8,7 @@ app.directive('vennArea', function ($parse) {
         var chart = venn.VennDiagram();
         chart.wrap(false)
             .width(100)
-            .height(100);
+            .height(150);
         var div = d3.select("#venn").datum(scope.data).call(chart);
         div.selectAll("text").style("fill", "white");
         div.selectAll(".venn-circle path").style("fill-opacity", 0.6);

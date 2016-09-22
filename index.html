@@ -10,43 +10,21 @@
   <body ng-controller="MainCtrl" >
     <div >
        <fieldset  data-ng-repeat="choice in choices track by $index">
-          <input type="text" ng-model="choice.title" name="" placeholder="title of yout venn" />
+          <input type="text" ng-model="choice.title" name="" placeholder="title of your venn" />
           <br>
           <tags-input ng-model="choice.items" min-length="1" allowed-tags-pattern="^[A-Za-z/#]+$" on-tag-added="addToAutoComplete($tag)">
             <auto-complete source="loadTags($query)"></auto-complete>
           </tags-input>
           <button class="remove" ng-click="removeChoice(choice)">-</button>
        </fieldset>
-       <button class="addfields" ng-click="addNewChoice()">Add fields</button>
-
-       <div id="choicesDisplay">
-          <!-- {{ choices }} -->
-
-
-       </div>
+       <button class="addfields" ng-click="addNewChoice()">Add venn</button>
     </div>
-    <!-- <form>
-      <div id="inputs" >
-        <p>
-          <label for="listName">Name of List</label>
-          <input type="text" name="listName" id="listName" value="" />
-        </p>
-        <p>
-          <label for="listItems">List Items</label>
-          <input type="textarea" name="listItems" value=""/>
-        </p>
-
-      </div>
-    </form> -->
-
-    <br>
-    {{yourData}}
     <br>
     <venn-area chart-data="myData" >
         <svg id="venn"> </svg>
     </venn-area>
     <br>
-    {{myData}}
+
     <br>
     <script type="text/javascript" src="./js/angular.min.js"></script>
     <script type="text/javascript" src="./js/d3.js"></script>
