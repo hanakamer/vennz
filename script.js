@@ -239,9 +239,11 @@
 //   return refresh(generateData())
 // })();
 
-var sets = [ {sets: ['A'], size: 12},
-	             {sets: ['B'], size: 12},
-	             {sets: ['A','B'], size: 2}];
+var sets = [
+        {sets: ['A'], size: 1, nodes : ['node_0']},
+        {sets: ['B'], size: 1, nodes : ['node_1']},
+        {sets: ['A','B'], size: 2, nodes : ['node_2', 'node_3']}
+        ];
 var chart = venn.VennDiagram()
     chart.wrap(false)
     .width(100)

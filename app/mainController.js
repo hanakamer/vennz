@@ -1,13 +1,21 @@
 app.controller('MainCtrl', function($scope) {
-
-var tags = [];
+var nodes=[];
 var intersections;
 // $scope.myData = intersections;
 $scope.myData = [ {sets: ['A'], size: 12},
                 {sets: ['B'], size: 12},
                 {sets: ['A','B'], size: 2}];
+$scope.nodesData = [];
 $scope.choices = [{id: '1'}];
-
+function containsObject(obj, list){
+  for (var i in list){
+    if(Object.keys(list[i])[0] === Object.keys(obj)[0]){
+      var nodeName = Object.keys(list[i])[0];
+      return list[i][nodeName];
+    }
+  }
+  return false;
+}
 function extractItem(array){
   var extractedArray = [];
   for (var i = 0; i < array.length; i++){
@@ -29,7 +37,6 @@ function combinations(str) {
     };
     return fn("", str, []);
 }
-
 function intersect(a, b) {
     var t;
     if (b.length > a.length) {
@@ -41,7 +48,18 @@ function intersect(a, b) {
         if (b.indexOf(e) !== -1) return true;
     });
 }
-
+function modifySets(obj){
+  var newSet;
+  var myList = [];
+  for (var i = 0; i < obj.nodes.length; i++){
+    newSet = {};
+    newSet.r = 8;
+    newSet.set = obj.sets;
+    newSet.name = obj.nodes[i];
+    myList.push(newSet);
+  }
+  return myList;
+}
 $scope.createSets = function(){
   var venn;
   intersections = [];
@@ -55,18 +73,18 @@ $scope.createSets = function(){
       for(var m = 0; m < intersections.length; m++){//loop the old list
         if(intersections[m]){
           var obj = {};
-          var arr1 = extractItem(choice.items); //the new added venn
-          var arr2 = intersections[m].items.slice();//the items in the list
+          var arr1 = extractItem(choice.nodes); //the new added venn
+          var arr2 = intersections[m].nodes.slice();//the items in the list
           interList = intersect(arr1,arr2);
           if(interList){
             obj.sets = [];
-            obj.items = interList.slice();
+            obj.nodes = interList.slice();
             obj.sets.push(choice.id+'');
             for ( var z in intersections[m].sets){
               obj.sets.push(intersections[m].sets[z]);
             }
             // obj.sets.push(intersections[m].sets);
-            obj.size = obj.items.length;
+            obj.size = obj.nodes.length;
             newList.push(obj);
           }
         }
@@ -75,25 +93,46 @@ $scope.createSets = function(){
       var choiceObj = {};
       choiceObj.sets = [];
       choiceObj.sets.push(choice.id+'');
-      choiceObj.items = extractItem(choice.items).slice();
-      choiceObj.size = choice.items.length;
+      choiceObj.nodes = extractItem(choice.nodes).slice();
+      choiceObj.size = choice.nodes.length;
       intersections.push(choiceObj);
     } else { //if the list is empty
       var obj = {};
       obj.sets = [];
       obj.sets.push(choice.id);
-      obj.size = choice.items.length;
-      obj.items =extractItem(choice.items);
+      obj.size = choice.nodes.length;
+      obj.nodes =extractItem(choice.nodes);
       intersections.push(obj);
     }
   }
   $scope.myData =  intersections;
+  // $scope.nodesData = [];
+  // for(var index in intersections){
+  //   console.log(index,intersections[index],intersections);
+  //   var setList = modifySets(intersections[index]);
+  //   for (var n in setList){
+  //     $scope.nodesData.push(setList[n]);
+  //   }
+  //   // $scope.nodesData.push(createSets(intersections[index]))
+  // }
 
 };
-$scope.addToAutoComplete = function(tag){
-  if(tags.indexOf(tag)===-1){
-    tags.push(tag);
+$scope.addNode = function(node, set){
+  var Node = {};
+  var nodeObj = {};
+  nodeObj.name = node.text;
+  nodeObj.set = [];
+  nodeObj.set.push(set);
+  nodeObj.r = 8;
+  Node[node.text]= nodeObj;
+
+  if(containsObject(Node, $scope.nodesData)){
+    var oldObj = containsObject(Node, $scope.nodesData);
+    oldObj.set.push(nodeObj.set[0]);
+  } else{
+    $scope.nodesData.push(Node);
   }
+
 };
 $scope.addNewChoice = function() {
   $scope.createSets();

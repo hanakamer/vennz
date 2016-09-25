@@ -12,8 +12,8 @@
        <fieldset  data-ng-repeat="choice in choices track by $index">
           <input type="text" ng-model="choice.title" name="" placeholder="title of your venn" />
           <br>
-          <tags-input ng-model="choice.items" min-length="1" allowed-tags-pattern="^[A-Za-z/#]+$" on-tag-added="addToAutoComplete($tag)">
-            <auto-complete source="loadTags($query)"></auto-complete>
+          <tags-input ng-model="choice.nodes" min-length="1" allowed-tags-pattern="^[A-Za-z/#]+$" on-tag-added="addNode($tag,choice.title)">
+
           </tags-input>
           <button class="remove" ng-click="removeChoice(choice)">-</button>
        </fieldset>
@@ -24,10 +24,13 @@
         <svg id="venn"> </svg>
     </venn-area>
     <br>
-
+    {{myData}}
+    <br>
+    {{nodesData}}
     <br>
     <script type="text/javascript" src="./js/angular.min.js"></script>
     <script type="text/javascript" src="./js/d3.js"></script>
+    <script type="text/javascript" src="./js/d3-venn.js"></script>
     <script type="text/javascript" src="./js/venn.js"></script>
     <script type="text/javascript"  src="./js/ng-tags-input/ng-tags-input.js"></script>
     <script type="text/javascript" src="./js/angular-d3.js"></script>
