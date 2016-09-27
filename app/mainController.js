@@ -1,12 +1,32 @@
 app.controller('MainCtrl', function($scope) {
 var nodes=[];
 var intersections;
+$scope.nodeInfo = [];
 // $scope.myData = intersections;
 $scope.myData = [ {sets: ['A'], size: 12},
                 {sets: ['B'], size: 12},
                 {sets: ['A','B'], size: 2}];
+$scope.nodez = [
+      {"name":"a","set":["1","2"],"r":8},
+    {"name":"b","set":["1"],"r":8},
+    {"name":"c","set":["1"],"r":8},
+    {"name":"d","set":["2"],"r":8},
+    {"name":"f","set":["2"],"r":8}
+  ];
 $scope.nodesData = [];
 $scope.choices = [{id: '1'}];
+function getOnlyNodes(array){
+  var myArray = [];
+  for (var index in array){
+    var val = Object.keys(array[index]).map(function(key){
+    return array[index][key];
+  });
+  myArray.push(val[0]);
+  }
+  return myArray;
+}
+
+
 function containsObject(obj, list){
   for (var i in list){
     if(Object.keys(list[i])[0] === Object.keys(obj)[0]){
@@ -123,7 +143,7 @@ $scope.addNode = function(node, set){
   nodeObj.name = node.text;
   nodeObj.set = [];
   nodeObj.set.push(set);
-  nodeObj.r = 8;
+  nodeObj.r = 15;
   Node[node.text]= nodeObj;
 
   if(containsObject(Node, $scope.nodesData)){
@@ -135,6 +155,7 @@ $scope.addNode = function(node, set){
 
 };
 $scope.addNewChoice = function() {
+  $scope.nodez = getOnlyNodes($scope.nodesData);
   $scope.createSets();
   var newItemNo = $scope.choices.length+1;
   $scope.choices.push({'id':newItemNo});

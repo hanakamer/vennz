@@ -12,22 +12,28 @@
        <fieldset  data-ng-repeat="choice in choices track by $index">
           <input type="text" ng-model="choice.title" name="" placeholder="title of your venn" />
           <br>
-          <tags-input ng-model="choice.nodes" min-length="1" allowed-tags-pattern="^[A-Za-z/#]+$" on-tag-added="addNode($tag,choice.title)">
+          <tags-input ng-model="choice.nodes" min-length="1" allowed-tags-pattern="^[A-Za-z0-9_/#]+$" on-tag-added="addNode($tag,choice.title)">
 
           </tags-input>
           <button class="remove" ng-click="removeChoice(choice)">-</button>
        </fieldset>
        <button class="addfields" ng-click="addNewChoice()">Add venn</button>
     </div>
+    {{nodeInfo}}
     <br>
-    <venn-area chart-data="myData" >
+    <!-- <venn-area chart-data="nodez" >
         <svg id="venn"> </svg>
+    </venn-area> -->
+
+    <venn-area chart-data="myData" id="venn" current-nodes="currentNodes">
+
     </venn-area>
-    <br>
+    {{currentNodes}}
+    <!-- <br>
     {{myData}}
     <br>
-    {{nodesData}}
-    <br>
+    {{nodez}}
+    <br> -->
     <script type="text/javascript" src="./js/angular.min.js"></script>
     <script type="text/javascript" src="./js/d3.js"></script>
     <script type="text/javascript" src="./js/d3-venn.js"></script>
@@ -45,4 +51,18 @@
     <script type="text/javascript" src="script.js"></script> -->
 
   </body>
+  <style>
+.venntooltip {
+  position: absolute;
+  text-align: center;
+  width: 128px;
+  height: 16px;
+  background: #333;
+  color: #ddd;
+  padding: 2px;
+  border: 0px;
+  border-radius: 8px;
+  opacity: 0;
+}
+</style>
 </html>
